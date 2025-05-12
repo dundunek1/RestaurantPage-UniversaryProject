@@ -1,0 +1,72 @@
+.carousel-item img {
+    height: 364px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 300px;
+    }
+}
+
+/*Style dla menu*/
+.menu {
+    margin-bottom: 32px;
+}
+
+.price {
+    font-weight: bold;
+    color: #7c4f2b;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-text {
+    flex: 1;
+    text-align: left;
+}
+
+/*Style dla rezerwacji*/
+.floor-label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+.table-map {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+.table-box {
+    background-color: #e6e6e6;
+    border: 2px solid #999;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 0.8rem;
+}
+.table-box:hover {
+    background-color: #cde;
+}
+.selected {
+    background-color: #8fc;
+    border-color: #4c8;
+}
+.opacity-50 {
+    opacity: 0.5;
+}
+.border-success {
+    border-color: #198754 !important;
+}

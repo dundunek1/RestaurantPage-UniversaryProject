@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Rezerwacja stolika - Smaczne Koryto</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+        <!-- <link rel="stylesheet" href="style.css" /> -->
+        <style>
+            /* .restaurant-map {
+                position: relative;
+                width: 100%;
+                max-width: 800px;
+                height: 600px;
+                margin: 0 auto;
+                background-color: #f8f9fa;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+            }
+
+            .table {
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                background-color: #dee2e6;
+                border: 2px solid #adb5bd;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .table:hover {
+                background-color: #e9ecef;
+                transform: scale(1.05);
+            }
+
+            .table.selected {
+                background-color: #198754;
+                color: white;
+                border-color: #146c43;
+                box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);
+            }
+
+            .table.unavailable {
+                background-color: #dc3545;
+                color: white;
+                border-color: #b02a37;
+                cursor: not-allowed;
+            }
+
+            .wall {
+                position: absolute;
+                background-color: #6c757d;
+            }
+
+            .entrance {
+                position: absolute;
+                background-color: #ffc107;
+                color: black;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .bar {
+                position: absolute;
+                background-color: #343a40;
+                border-radius: 5px;
+            }
+
+            .table-info {
+                margin-top: 20px;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+            }
+
+            .date-picker {
+                margin-bottom: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .restaurant-map {
+                    height: 400px;
+                }
+
+                .table {
+                    width: 60px;
+                    height: 60px;
+                    font-size: 0.8rem;
+                }
+            } */
+            /* Responsywna mapa restauracji - nowe podejście */
+            .restaurant-map {
+                position: relative;
+                width: 100%;
+                max-width: 800px;
+                height: 600px;
+                margin: 0 auto;
+                background-color: #f8f9fa;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            /* Wrapper dla elementów w mapie - dzięki temu zachowują absolutne pozycjonowanie */
+            .map-content {
+                position: relative;
+                width: 800px; /* Stała szerokość - pozwala na utrzymanie proporcji */
+                height: 600px;
+                min-width: 800px;
+            }
+
+            .table {
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                background-color: #dee2e6;
+                border: 2px solid #adb5bd;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            .table:hover {
+                background-color: #e9ecef;
+                transform: scale(1.05);
+                z-index: 10;
+            }
+
+            .table.selected {
+                background-color: #198754;
+                color: white;
+                border-color: #146c43;
+                box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);
+                z-index: 15;
+            }
+
+            .table.unavailable {
+                background-color: #dc3545;
+                color: white;
+                border-color: #b02a37;
+                cursor: not-allowed;
+            }
+
+            .wall {
+                position: absolute;
+                background-color: #6c757d;
+            }
+
+            .entrance {
+                position: absolute;
+                background-color: #ffc107;
+                color: black;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .bar {
+                position: absolute;
+                background-color: #343a40;
+                border-radius: 5px;
+            }
+
+            /* Wskaźnik przewijania - pokazuje się tylko na mniejszych ekranach */
+            .scroll-indicator {
+                display: none;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 12px;
+                z-index: 20;
+            }
+
+            /* Responsywność dla różnych rozmiarów ekranu */
+            @media (max-width: 850px) {
+                .restaurant-map {
+                    width: 100%;
+                    max-width: 100%;
+                    height: 500px;
+                    overflow: auto;
+                }
+
+                .scroll-indicator {
+                    display: block;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .restaurant-map {
+                    height: 400px;
+                }
+
+                /* Na bardzo małych ekranach można dodać zoom-out dla lepszej widoczności całości */
+                .map-content {
+                    transform-origin: top left;
+                }
+            }
+
+            /* Poprawa dostępności - lepsza wizualizacja na urządzeniach dotykowych */
+            @media (hover: none) {
+                .table:hover {
+                    transform: none;
+                }
+
+                .table:active {
+                    transform: scale(1.05);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home.html"
+                    >Podkarpackie Przysmaki</a
+                >
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navMenu"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.html"
+                                >Strona główna</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="menu.html">Menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="booking.html"
+                                >Rezerwacje</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.html#onas">O nas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header class="bg-light text-center py-4">
+            <div class="container">
+                <h1 class="display-5">Rezerwacja stolika</h1>
+                <p class="lead">
+                    Wybierz stolik, datę i godzinę, a my przygotujemy dla Ciebie
+                    wyjątkowe miejsce.
+                </p>
+            </div>
+        </header>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="date-picker">
+                            <h4 class="mb-3">Wybierz datę i godzinę</h4>
+                            <div class="mb-3">
+                                <label for="reservation-date" class="form-label"
+                                    >Data rezerwacji</label
+                                >
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="reservation-date"
+                                    required
+                                    min="2025-05-11"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="reservation-time" class="form-label"
+                                    >Godzina rezerwacji</label
+                                >
+                                <select
+                                    class="form-select"
+                                    id="reservation-time"
+                                    required
+                                >
+                                    <option value="" selected disabled>
+                                        Wybierz godzinę
+                                    </option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                </select>
+                            </div>
+                            <button
+                                id="check-availability"
+                                class="btn btn-primary"
+                            >
+                                Sprawdź dostępność
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="legend p-3 bg-light rounded border">
+                            <h4 class="mb-3">Legenda</h4>
+                            <div class="d-flex align-items-center mb-2">
+                                <div
+                                    style="
+                                        width: 20px;
+                                        height: 20px;
+                                        background-color: #dee2e6;
+                                        border: 1px solid #adb5bd;
+                                        border-radius: 3px;
+                                    "
+                                ></div>
+                                <span class="ms-2">Stolik dostępny</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div
+                                    style="
+                                        width: 20px;
+                                        height: 20px;
+                                        background-color: #198754;
+                                        border: 1px solid #146c43;
+                                        border-radius: 3px;
+                                    "
+                                ></div>
+                                <span class="ms-2">Stolik wybrany</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div
+                                    style="
+                                        width: 20px;
+                                        height: 20px;
+                                        background-color: #dc3545;
+                                        border: 1px solid #b02a37;
+                                        border-radius: 3px;
+                                    "
+                                ></div>
+                                <span class="ms-2">Stolik niedostępny</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div
+                                    style="
+                                        width: 20px;
+                                        height: 20px;
+                                        background-color: #343a40;
+                                        border-radius: 3px;
+                                    "
+                                ></div>
+                                <span class="ms-2">Bar</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div
+                                    style="
+                                        width: 20px;
+                                        height: 20px;
+                                        background-color: #ffc107;
+                                        border-radius: 3px;
+                                    "
+                                ></div>
+                                <span class="ms-2">Wejście</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="text-center mb-4">Wybierz stolik na planie sali</h4>
+                <div class="restaurant-map mb-4" id="restaurant-map">
+                    <!-- Ściany -->
+                    <div
+                        class="wall"
+                        style="top: 0; left: 0; width: 100%; height: 10px"
+                    ></div>
+                    <div
+                        class="wall"
+                        style="bottom: 0; left: 0; width: 100%; height: 10px"
+                    ></div>
+                    <div
+                        class="wall"
+                        style="top: 0; left: 0; width: 10px; height: 100%"
+                    ></div>
+                    <div
+                        class="wall"
+                        style="top: 0; right: 0; width: 10px; height: 100%"
+                    ></div>
+
+                    <!-- Wejście -->
+                    <div
+                        class="entrance"
+                        style="
+                            bottom: 0;
+                            left: 350px;
+                            width: 100px;
+                            height: 20px;
+                            line-height: 20px;
+                        "
+                    >
+                        WEJŚCIE
+                    </div>
+
+                    <!-- Bar -->
+                    <div
+                        class="bar"
+                        style="
+                            top: 20px;
+                            right: 20px;
+                            width: 200px;
+                            height: 80px;
+                        "
+                    ></div>
+
+                    <!-- Stoliki -->
+                    <div
+                        class="table"
+                        data-table-id="1"
+                        style="top: 140px; left: 60px"
+                    >
+                        Stolik 1<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="2"
+                        style="top: 140px; left: 200px"
+                    >
+                        Stolik 2<br />2 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="3"
+                        style="top: 140px; left: 340px"
+                    >
+                        Stolik 3<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="4"
+                        style="top: 140px; left: 480px"
+                    >
+                        Stolik 4<br />2 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="5"
+                        style="top: 140px; left: 620px"
+                    >
+                        Stolik 5<br />6 os.
+                    </div>
+
+                    <div
+                        class="table"
+                        data-table-id="6"
+                        style="top: 290px; left: 60px"
+                    >
+                        Stolik 6<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="7"
+                        style="top: 290px; left: 200px"
+                    >
+                        Stolik 7<br />8 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="8"
+                        style="top: 290px; left: 340px"
+                    >
+                        Stolik 8<br />2 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="9"
+                        style="top: 290px; left: 480px"
+                    >
+                        Stolik 9<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="10"
+                        style="top: 290px; left: 620px"
+                    >
+                        Stolik 10<br />2 os.
+                    </div>
+
+                    <div
+                        class="table"
+                        data-table-id="11"
+                        style="top: 440px; left: 60px"
+                    >
+                        Stolik 11<br />6 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="12"
+                        style="top: 440px; left: 200px"
+                    >
+                        Stolik 12<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="13"
+                        style="top: 440px; left: 340px"
+                    >
+                        Stolik 13<br />2 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="14"
+                        style="top: 440px; left: 480px"
+                    >
+                        Stolik 14<br />4 os.
+                    </div>
+                    <div
+                        class="table"
+                        data-table-id="15"
+                        style="top: 440px; left: 620px"
+                    >
+                        Stolik 15<br />2 os.
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="table-info d-none" id="table-info">
+                            <h4 class="mb-3">Informacje o wybranym stoliku</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <strong>Numer stolika:</strong>
+                                        <span id="selected-table-number"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Liczba miejsc:</strong>
+                                        <span
+                                            id="selected-table-capacity"
+                                        ></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <strong>Data:</strong>
+                                        <span id="selected-date"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Godzina:</strong>
+                                        <span id="selected-time"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="reservation-form mt-4 d-none"
+                            id="reservation-form"
+                        >
+                            <h4 class="mb-3">Formularz rezerwacji</h4>
+                            <form id="booking-form">
+                                <input
+                                    type="hidden"
+                                    id="form-table-id"
+                                    name="table_id"
+                                />
+                                <input
+                                    type="hidden"
+                                    id="form-date"
+                                    name="data"
+                                />
+                                <input
+                                    type="hidden"
+                                    id="form-time"
+                                    name="godzina"
+                                />
+                                <input
+                                    type="hidden"
+                                    id="form-capacity"
+                                    name="liczba_miejsc"
+                                />
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label
+                                            for="form-name"
+                                            class="form-label"
+                                            >Imię i nazwisko</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="form-name"
+                                            name="imie"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label
+                                            for="form-email"
+                                            class="form-label"
+                                            >Email</label
+                                        >
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="form-email"
+                                            name="email"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label
+                                            for="form-phone"
+                                            class="form-label"
+                                            >Telefon</label
+                                        >
+                                        <input
+                                            type="tel"
+                                            class="form-control"
+                                            id="form-phone"
+                                            name="telefon"
+                                        />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label
+                                            for="form-guests"
+                                            class="form-label"
+                                            >Liczba gości</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="form-guests"
+                                            name="liczba_osob"
+                                            min="1"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="form-message" class="form-label"
+                                        >Dodatkowe uwagi</label
+                                    >
+                                    <textarea
+                                        class="form-control"
+                                        id="form-message"
+                                        name="wiadomosc"
+                                        rows="3"
+                                    ></textarea>
+                                </div>
+
+                                <div class="text-center">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success btn-lg"
+                                    >
+                                        Zarezerwuj stolik
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div
+                            class="alert alert-success mt-4 d-none"
+                            id="booking-success"
+                        >
+                            <h4 class="alert-heading">
+                                <i class="bi bi-check-circle-fill me-2"></i
+                                >Rezerwacja przyjęta!
+                            </h4>
+                            <p>
+                                Twoja rezerwacja została przyjęta. Potwierdzenie
+                                zostało wysłane na podany adres email.
+                            </p>
+                            <hr />
+                            <p class="mb-0">
+                                Dziękujemy za wybór restauracji Smaczne Koryto!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-dark text-white text-center py-3">
+            <div class="container">
+                <p class="mb-0">&copy; 2025 Podkarpackie Przysmaki</p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="js/booking.js"></script>
+    </body>
+</html>

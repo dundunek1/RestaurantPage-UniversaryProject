@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Restauracja Podkarpackie Przysmaki</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  
+  <body>
+    <!--Nawigacja-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home.html">Podkarpackie Przysmaki</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="#">Strona główna</a></li>
+            <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="rezerwacje.html">Rezerwacje</a></li>
+            <li class="nav-item"><a class="nav-link" href="home.html#onas">O nas</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!---->
+
+    <!-- Powitanie-->
+    <header class="bg-light text-center py-5">
+      <div class="container">
+        <h1 class="display-4">Rezerwacje</h1>
+        <p class="lead">Planujesz większe przyjęcie? Może wybierasz się na randkę albo po prostu nie lubisz czekać aż stolik się zwolni?</p>
+      </div>
+    </header>
+    <!---->
+
+    <!-- Formularz-->
+    <section>
+      <div class="container py-5">
+        <h1 class="text-center mb-4">Rezerwacja stolika</h1>
+
+        <form class="row g-3" id="reservationForm">
+          <!--Dane klienta-->
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">Imię</label>
+            <input type="text" class="form-control" id="firstName" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Nazwisko</label>
+            <input type="text" class="form-control" id="lastName" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Telefon</label>
+            <input type="tel" class="form-control" id="phone" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+        
+          <div class="col-md-4">
+            <label for="date" class="form-label">Data</label>
+            <input type="date" class="form-control" id="date" required>
+          </div>
+        
+          <div class="col-md-4">
+            <label for="time" class="form-label">Godzina</label>
+            <input type="time" class="form-control" id="time" required>
+          </div>
+        
+          <div class="col-md-4">
+            <label for="guests" class="form-label">Ilość osób</label>
+            <input type="number" class="form-control" id="guests" min="1" max="20" required value="1">
+          </div>
+
+          <!--Mapa stolików-->
+          <div class="col-12">
+            <div id="tableError" class="text-danger mt-2 d-none">Wybrany stolik nie ma wystarczającej liczby miejsc.</div>
+            <label class="form-label floor-label">Sala - parter</label>
+            <div class="table-map" id="tableMap1"></div>
+
+            <label class="form-label floor-label">Sala - piętro</label>
+            <div class="table-map" id="tableMap2"></div>
+          </div>
+
+          <!--Podsumowanie-->
+          <div class="col-md-6">
+            <label for="selectedTable" class="form-label">Wybrany stolik</label>
+            <input type="text" class="form-control" id="selectedTable" readonly required>
+          </div>
+        
+          <div class="col-12">
+            <label for="notes" class="form-label">Dodatkowe uwagi</label>
+            <textarea class="form-control" id="notes" rows="3"></textarea>
+          </div>
+
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary btn-lg">Rezerwuj</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!---->
+
+    <!--Lokalizacja-->
+    <section id="kontakt" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">Kontakt i Lokalizacja</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Zapisz się do naszego newslettera</h4>
+            <p>Chcesz być na bieżąco z ofertą tygodnia? Zostaw maila, damy znać!</p>
+            <form>
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Twój email" required />
+              </div>
+              <button type="submit" class="btn btn-primary">Zapisz się</button>
+            </form>
+          </div>
+
+          <div class="col-md-6">
+            <h4>Tu nas znajdziesz</h4>
+            <div class="ratio ratio-4x3">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2562.2660841760643!2d22.002739115718227!3d50.04131807942356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473ce134f13827d7%3A0x9e9f4b130a1d3d6f!2sRynek%2C%2035-064%20Rzesz%C3%B3w!5e0!3m2!1spl!2spl!4v1713432230000!5m2!1spl!2spl"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!---->
+
+     <!--Stopka-->
+    <footer class="bg-dark text-white text-center py-3">
+      <div class="container">
+        <p class="mb-0">&copy; 2025 Podkarpackie Przysmaki</p>
+      </div>
+    </footer>
+    <!---->
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
