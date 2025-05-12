@@ -12,96 +12,9 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
-        <!-- <link rel="stylesheet" href="style.css" /> -->
+       
         <style>
-            /* .restaurant-map {
-                position: relative;
-                width: 100%;
-                max-width: 800px;
-                height: 600px;
-                margin: 0 auto;
-                background-color: #f8f9fa;
-                border: 2px solid #ddd;
-                border-radius: 10px;
-            }
-
-            .table {
-                position: absolute;
-                width: 80px;
-                height: 80px;
-                background-color: #dee2e6;
-                border: 2px solid #adb5bd;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-
-            .table:hover {
-                background-color: #e9ecef;
-                transform: scale(1.05);
-            }
-
-            .table.selected {
-                background-color: #198754;
-                color: white;
-                border-color: #146c43;
-                box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);
-            }
-
-            .table.unavailable {
-                background-color: #dc3545;
-                color: white;
-                border-color: #b02a37;
-                cursor: not-allowed;
-            }
-
-            .wall {
-                position: absolute;
-                background-color: #6c757d;
-            }
-
-            .entrance {
-                position: absolute;
-                background-color: #ffc107;
-                color: black;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            .bar {
-                position: absolute;
-                background-color: #343a40;
-                border-radius: 5px;
-            }
-
-            .table-info {
-                margin-top: 20px;
-                padding: 15px;
-                border-radius: 10px;
-                background-color: #f8f9fa;
-                border: 1px solid #dee2e6;
-            }
-
-            .date-picker {
-                margin-bottom: 20px;
-            }
-
-            @media (max-width: 768px) {
-                .restaurant-map {
-                    height: 400px;
-                }
-
-                .table {
-                    width: 60px;
-                    height: 60px;
-                    font-size: 0.8rem;
-                }
-            } */
-            /* Responsywna mapa restauracji - nowe podejście */
+            
             .restaurant-map {
                 position: relative;
                 width: 100%;
@@ -114,10 +27,10 @@
                 overflow: hidden;
             }
 
-            /* Wrapper dla elementów w mapie - dzięki temu zachowują absolutne pozycjonowanie */
+            
             .map-content {
                 position: relative;
-                width: 800px; /* Stała szerokość - pozwala na utrzymanie proporcji */
+                width: 800px; 
                 height: 600px;
                 min-width: 800px;
             }
@@ -179,7 +92,7 @@
                 border-radius: 5px;
             }
 
-            /* Wskaźnik przewijania - pokazuje się tylko na mniejszych ekranach */
+            
             .scroll-indicator {
                 display: none;
                 position: absolute;
@@ -193,7 +106,7 @@
                 z-index: 20;
             }
 
-            /* Responsywność dla różnych rozmiarów ekranu */
+           
             @media (max-width: 850px) {
                 .restaurant-map {
                     width: 100%;
@@ -212,13 +125,13 @@
                     height: 400px;
                 }
 
-                /* Na bardzo małych ekranach można dodać zoom-out dla lepszej widoczności całości */
+               
                 .map-content {
                     transform-origin: top left;
                 }
             }
 
-            /* Poprawa dostępności - lepsza wizualizacja na urządzeniach dotykowych */
+            
             @media (hover: none) {
                 .table:hover {
                     transform: none;
