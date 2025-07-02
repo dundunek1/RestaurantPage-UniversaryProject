@@ -1,0 +1,62 @@
+:root {
+    --primary: #7c4f2b;
+    --secondary: #d4af37;
+    --accent: #cde;
+    --background: #f8f9fa;
+    --text-dark: #333;
+    --text-light: #666;
+    --highlight: #8fc;
+    --success: #198754;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --light-gray: #f8f9fa;
+    --carousel-height-desktop: 512px;
+    --carousel-height-mobile: 300px;
+}
+
+body {
+    overflow-x: hidden;
+    font-size: clamp(14px, 1.5vw, 18px);
+}
+
+.carousel-item img {
+    height: var(--carousel-height-desktop);
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: var(--carousel-height-mobile);
+    }
+}
+
+@media (max-width: 576px) {
+    .list-group-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .price {
+        align-self: flex-end;
+        margin-top: 5px;
+    }
+}
+
+footer {
+    width: 100%;
+    margin: 0;
+    padding: 1rem 0;
+}
+
+.full-width-section {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#kontakt form {
+    margin-bottom: 20px;
+}

@@ -3,382 +3,51 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Restauracja Podkarpackie Przysmaki</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <style>
-            /* Style dla karuzeli */
-            .carousel-item img {
-                height: 364px;
-                object-fit: cover;
-                width: 100%;
-            }
-
-            @media (max-width: 768px) {
-                .carousel-item img {
-                    height: 300px;
-                }
-            }
-
-            /* Style dla menu */
-            .menu {
-                margin-bottom: 32px;
-            }
-
-            .price {
-                font-weight: bold;
-                color: #7c4f2b;
-                margin-left: 10px;
-                white-space: nowrap;
-            }
-
-            .list-group-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 12px 15px;
-            }
-
-            .item-text {
-                flex: 1;
-                text-align: left;
-                padding-right: 15px;
-            }
-
-            /* Style dla rezerwacji */
-            .floor-label {
-                font-weight: bold;
-                font-size: 1.2rem;
-                margin-top: 2rem;
-            }
-
-            .table-map {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-                gap: 15px;
-                margin-top: 10px;
-            }
-
-            .table-box {
-                background-color: #e6e6e6;
-                border: 2px solid #999;
-                padding: 10px;
-                text-align: center;
-                cursor: pointer;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                font-size: 0.8rem;
-                transition: all 0.2s ease;
-            }
-
-            .table-box:hover {
-                background-color: #cde;
-                transform: scale(1.05);
-            }
-
-            .selected {
-                background-color: #8fc;
-                border-color: #4c8;
-            }
-
-            .opacity-50 {
-                opacity: 0.5;
-            }
-
-            .border-success {
-                border-color: #198754 !important;
-            }
-
-            /* Dodane style dla responsywności */
-            @media (max-width: 576px) {
-                .table-map {
-                    grid-template-columns: repeat(5, 1fr);
-                }
-
-                .table-box {
-                    width: 50px;
-                    height: 50px;
-                    font-size: 0.7rem;
-                }
-
-                .list-group-item {
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-
-                .price {
-                    align-self: flex-end;
-                    margin-top: 5px;
-                }
-            }
-
-            /* Style dla stopki - zapewnienie pełnej szerokości */
-            footer {
-                width: 100%;
-                margin: 0;
-                padding: 1rem 0;
-            }
-
-            /* Style dla sekcji na pełną szerokość */
-            .full-width-section {
-                width: 100%;
-                margin-left: 0;
-                margin-right: 0;
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            /* Poprawka dla formularza w sekcji kontaktowej */
-            #kontakt form {
-                margin-bottom: 20px;
-            }
-
-            /* Dodatkowe style dla polepszenia wyglądu */
-            .list-group-item strong {
-                display: block;
-                margin-bottom: 4px;
-                color: #333;
-            }
-
-            /* Resetowanie stylów dla ciała strony */
-            body {
-                overflow-x: hidden;
-            }
-
-            /* Nowe style dla rozbudowanego menu */
-            .menu-category {
-                margin-bottom: 40px;
-            }
-
-            .menu-item {
-                cursor: pointer;
-                transition: background-color 0.2s;
-            }
-
-            .menu-item:hover {
-                background-color: #f8f9fa;
-            }
-
-            .dish-details {
-                display: none;
-                padding: 15px;
-                background-color: #f8f9fa;
-                border-radius: 0 0 5px 5px;
-            }
-
-            .dish-details.active {
-                display: block;
-            }
-
-            .dish-image {
-                width: 100%;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                height: 200px;
-                object-fit: cover;
-            }
-
-            .ingredients {
-                font-style: italic;
-                margin-bottom: 10px;
-                color: #666;
-            }
-
-            .dietary-info {
-                display: flex;
-                gap: 8px;
-                margin-top: 10px;
-            }
-
-            .dietary-badge {
-                font-size: 0.7rem;
-                padding: 3px 8px;
-                border-radius: 12px;
-            }
-
-            .nav-pills .nav-link.active {
-                background-color: #7c4f2b;
-            }
-
-            .nav-pills .nav-link {
-                color: #333;
-            }
-
-            .menu-header {
-                background-color: #f8f8f8;
-                padding: 15px;
-                margin-bottom: 15px;
-                border-radius: 5px;
-                border-left: 4px solid #7c4f2b;
-            }
-
-            /* Regional decor elements */
-            .regional-separator {
-                height: 30px;
-                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="10" viewBox="0 0 40 10"><path d="M0,5 C10,0 15,10 20,5 C25,0 30,10 40,5" stroke="%237c4f2b" fill="none" stroke-width="1"/></svg>');
-                background-repeat: repeat-x;
-                background-size: 40px 10px;
-                margin: 30px 0;
-                opacity: 0.5;
-            }
-
-            .menu-category-title {
-                position: relative;
-                display: inline-block;
-                padding-bottom: 5px;
-            }
-
-            .menu-category-title::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: #7c4f2b;
-            }
-
-            /* Special offers badge */
-            .special-badge {
-                background-color: #d4af37;
-                color: white;
-                font-size: 0.7rem;
-                padding: 3px 6px;
-                border-radius: 10px;
-                margin-left: 8px;
-                vertical-align: middle;
-            }
-
-            .chef-recommendation {
-                background-color: rgba(215, 44, 44, 0.1);
-                border-left: 3px solid #d72c2c;
-            }
-
-            /* Filtering system */
-            .filter-container {
-                margin-bottom: 20px;
-                padding: 15px;
-                background-color: #f8f9fa;
-                border-radius: 5px;
-            }
-
-            .filter-btn {
-                margin-right: 5px;
-                margin-bottom: 5px;
-                font-size: 0.85rem;
-            }
-
-            .menu-pills-container {
-                overflow-x: auto;
-                white-space: nowrap;
-                padding-bottom: 5px;
-                margin-bottom: 15px;
-            }
-
-            .menu-pills-container .nav {
-                display: inline-flex;
-            }
-
-            .menu-pills-container .nav-item {
-                display: inline-block;
-            }
-        </style>
+        <title>Menu - Restauracja Podkarpackie Przysmaki</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link href="css/styles.css" rel="stylesheet"/>
+        <link href="css/menu.css" rel="stylesheet"/>
     </head>
 
     <body>
-        <!--Nawigacja-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="home.html"
-                    >Podkarpackie Przysmaki</a
-                >
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navMenu"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navMenu">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html"
-                                >Strona główna</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="menu.html">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="booking.html"
-                                >Rezerwacje</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html#onas">O nas</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!---->
+         <!--Nawigacja-->
+        <?php include 'layout/navbar.php'; ?>
 
-        <!-- Powitanie menu-->
+        <!-- Powitanie-->
         <header class="bg-light text-center py-5">
             <div class="container">
                 <h1 class="display-4">Nasze Menu</h1>
-                <p class="lead">
-                    Zapraszamy do zapoznania się z najnowszą ofertą restauracji.
-                </p>
-                <p class="text-muted">
-                    Kliknij na danie, aby zobaczyć więcej szczegółów
-                </p>
+                <p class="lead">Zapraszamy do zapoznania się z najnowszą ofertą restauracji.</p>
+                <p class="text-muted"> Kliknij na danie, aby zobaczyć więcej szczegółów</p>
             </div>
         </header>
-        <!---->
 
+        <!-- Menu-->
         <main class="container py-4">
             <!-- Filtrowanie menu -->
             <div class="filter-container">
                 <h5>Filtruj menu</h5>
+
                 <div class="mb-2">
-                    <button
-                        class="btn btn-sm btn-outline-secondary filter-btn"
-                        data-filter="all"
-                    >
-                        Wszystkie
+                    <button class="btn btn-sm btn-outline-secondary filter-btn" data-filter="all">
+                            Wszystkie
                     </button>
-                    <button
-                        class="btn btn-sm btn-outline-secondary filter-btn"
-                        data-filter="vegetarian"
-                    >
-                        Wegetariańskie
+
+                    <button class="btn btn-sm btn-outline-secondary filter-btn" data-filter="vegetarian">
+                            Wegetariańskie
                     </button>
-                    <button
-                        class="btn btn-sm btn-outline-secondary filter-btn"
-                        data-filter="gluten-free"
-                    >
-                        Bez glutenu
+
+                    <button class="btn btn-sm btn-outline-secondary filter-btn" data-filter="gluten-free">
+                            Bez glutenu
                     </button>
-                    <button
-                        class="btn btn-sm btn-outline-secondary filter-btn"
-                        data-filter="spicy"
-                    >
-                        Ostre
+
+                    <button class="btn btn-sm btn-outline-secondary filter-btn" data-filter="spicy">
+                            Ostre
                     </button>
-                    <button
-                        class="btn btn-sm btn-outline-secondary filter-btn"
-                        data-filter="chef-recommendation"
-                    >
-                        Polecane przez szefa
+
+                    <button class="btn btn-sm btn-outline-secondary filter-btn" data-filter="chef-recommendation">
+                            Polecane przez szefa
                     </button>
                 </div>
             </div>
@@ -389,31 +58,35 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#zupy">Zupy</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#przystawki">Przystawki</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#dania-glowne"
-                            >Dania główne</a
-                        >
+                        <a class="nav-link" href="#dania-glowne">Dania główne</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#burgery">Burgery</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#makarony">Makarony</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#dania-regionalne"
-                            >Dania regionalne</a
-                        >
+                        <a class="nav-link" href="#dania-regionalne">Dania regionalne</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#desery">Desery</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#dla-dzieci">Dla dzieci</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#napoje">Napoje</a>
                     </li>
@@ -428,26 +101,25 @@
                 </div>
 
                 <ul class="list-group mb-4">
-                    <li
-                        class="list-group-item menu-item"
-                        data-categories="vegetarian"
-                        onclick="toggleDetails('kapusniak-details')"
-                    >
+                    <li class="list-group-item menu-item"
+                        data-categories=""
+                        onclick="toggleDetails('kapusniak-details')">
+
                         <div class="item-text">
-                            <strong>Kapuśniak na żeberkach</strong><br />
-                            Gęsta zupa z żeberkami i kiszoną kapustą.
+                            <strong>Kapuśniak na żeberkach</strong><br /> Gęsta zupa z żeberkami i kiszoną kapustą.
                         </div>
+
                         <span class="price">24 zł</span>
                     </li>
+
                     <div id="kapusniak-details" class="dish-details">
                         <div class="row">
                             <div class="col-md-4">
-                                <img
-                                    src="/api/placeholder/400/300"
-                                    alt="Kapuśniak na żeberkach"
-                                    class="dish-image"
-                                />
+                                <img src="assets\kapusniak-zeberka.jpeg"
+                                     alt="Kapuśniak na żeberkach"
+                                     class="dish-image"/>
                             </div>
+
                             <div class="col-md-8">
                                 <h5>Kapuśniak na żeberkach</h5>
                                 <p class="ingredients">
@@ -463,9 +135,7 @@
                                     kawałkami mięsa i pieczywem na zakwasie.
                                 </p>
                                 <div class="dietary-info">
-                                    <span class="dietary-badge bg-secondary"
-                                        >430 kcal</span
-                                    >
+                                    <span class="dietary-badge bg-secondary">430 kcal</span>
                                 </div>
                             </div>
                         </div>
@@ -473,7 +143,7 @@
 
                     <li
                         class="list-group-item menu-item chef-recommendation"
-                        data-categories="vegetarian chef-recommendation"
+                        data-categories="chef-recommendation"
                         onclick="toggleDetails('zalewajka-details')"
                     >
                         <div class="item-text">
@@ -491,7 +161,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\zalewajka.webp"
                                     alt="Zalewajka podkarpacka"
                                     class="dish-image"
                                 />
@@ -536,7 +206,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\barszcz-czerw.jpeg"
                                     alt="Barszcz polanowski"
                                     class="dish-image"
                                 />
@@ -584,7 +254,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\zupa-pokrzywa.jpg"
                                     alt="Zupa z pokrzyw"
                                     class="dish-image"
                                 />
@@ -635,7 +305,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\chlodnik-botwinka.avif"
                                     alt="Chłodnik z botwinki"
                                     class="dish-image"
                                 />
@@ -700,7 +370,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\proziaki.webp"
                                     alt="Proziaki z masłem czosnkowym"
                                     class="dish-image"
                                 />
@@ -748,7 +418,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\fuczki.jpg"
                                     alt="Fuczki z kiszoną kapustą"
                                     class="dish-image"
                                 />
@@ -796,7 +466,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\tartinki.jpg"
                                     alt="Tartinki z pastą z fasoli"
                                     class="dish-image"
                                 />
@@ -848,7 +518,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\oscypek.jpg"
                                     alt="Grillowany oscypek"
                                     class="dish-image"
                                 />
@@ -914,7 +584,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\pieczen-dzik.jpg"
                                     alt="Pieczeń z dzika"
                                     class="dish-image"
                                 />
@@ -962,7 +632,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\steak.png"
                                     alt="Stek z antrykotu"
                                     class="dish-image"
                                 />
@@ -1010,7 +680,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\golabki.jpg"
                                     alt="Gołąbki po łemkowsku"
                                     class="dish-image"
                                 />
@@ -1057,7 +727,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\pierogi.jpg"
                                     alt="Pierożki z bryndzą"
                                     class="dish-image"
                                 />
@@ -1109,7 +779,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\golonka.jpg"
                                     alt="Golonka po laskowej"
                                     class="dish-image"
                                 />
@@ -1173,7 +843,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\burger-wiejski.jpg"
                                     alt="Wiejski burger"
                                     class="dish-image"
                                 />
@@ -1220,7 +890,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\burger-dzik.webp"
                                     alt="Burger Bieszczadzki"
                                     class="dish-image"
                                 />
@@ -1269,7 +939,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\burger-wege.avif"
                                     alt="Burger wegetariański"
                                     class="dish-image"
                                 />
@@ -1333,7 +1003,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\tagliatelle-kurki.jpg"
                                     alt="Tagliatelle z kurkami"
                                     class="dish-image"
                                 />
@@ -1381,7 +1051,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\pappadrelle.jpg"
                                     alt="Pappardelle z ragu"
                                     class="dish-image"
                                 />
@@ -1425,7 +1095,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\rigatoni.jpg"
                                     alt="Rigatoni arrabbiata"
                                     class="dish-image"
                                 />
@@ -1492,7 +1162,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\kwasnica.jpg"
                                     alt="Kwaśnica po góralsku"
                                     class="dish-image"
                                 />
@@ -1539,7 +1209,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\hreczanki.jpg"
                                     alt="Hreczanyky"
                                     class="dish-image"
                                 />
@@ -1585,7 +1255,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\karmindale.jpeg"
                                     alt="Karminadle ze szpinakiem"
                                     class="dish-image"
                                 />
@@ -1643,7 +1313,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\sernik-ziemniak.jpeg"
                                     alt="Sernik z ziemniakami"
                                     class="dish-image"
                                 />
@@ -1692,7 +1362,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\knedle-trus.jpeg"
                                     alt="Knedle z truskawkami"
                                     class="dish-image"
                                 />
@@ -1742,7 +1412,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\jabcok.jpg"
                                     alt="Jabcok z sosem waniliowym"
                                     class="dish-image"
                                 />
@@ -1793,7 +1463,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\kompot-susz.jpg"
                                     alt="Kompot z suszu"
                                     class="dish-image"
                                 />
@@ -1854,7 +1524,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\mini-proziak.webp"
                                     alt="Mini proziaczki"
                                     class="dish-image"
                                 />
@@ -1901,7 +1571,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\krem-march.webp"
                                     alt="Krem z marchewki"
                                     class="dish-image"
                                 />
@@ -1951,7 +1621,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\nugget.jpg"
                                     alt="Domowe nuggetsy"
                                     class="dish-image"
                                 />
@@ -1995,7 +1665,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\nalesniki.jpeg"
                                     alt="Naleśniki z serem"
                                     class="dish-image"
                                 />
@@ -2051,7 +1721,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\kompot-rab.jpeg"
                                     alt="Kompot z jabłek"
                                     class="dish-image"
                                 />
@@ -2101,7 +1771,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\podpiw.jpg"
                                     alt="Podpiwek regionalny"
                                     class="dish-image"
                                 />
@@ -2148,7 +1818,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\lemon-bez.jpg"
                                     alt="Lemoniada z czarnego bzu"
                                     class="dish-image"
                                 />
@@ -2199,7 +1869,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img
-                                    src="/api/placeholder/400/300"
+                                    src="assets\kwa-chleb.jpg"
                                     alt="Kwas chlebowy"
                                     class="dish-image"
                                 />
@@ -2235,149 +1905,16 @@
             </section>
         </main>
 
-        <!--Rezerwacje - routing-->
-        <section id="rezerwacje" class="py-5 bg-light full-width-section">
-            <div class="container text-center">
-                <h2 class="mb-4">Zarezerwuj stolik</h2>
-                <p class="mb-3">
-                    Kliknij poniżej, aby przejść do formularza rezerwacji.
-                    Zajmiemy się resztą!
-                </p>
-                <a href="booking.html" class="btn btn-primary btn-lg"
-                    >Przejdź do rezerwacji</a
-                >
-            </div>
-        </section>
-        <!---->
+        <!-- Zarezerwuj-->
+        <?php include 'layout/book-now.php'; ?>
 
-        <!--Lokalizacja-->
-        <section id="kontakt" class="py-5 bg-light full-width-section">
-            <div class="container">
-                <h2 class="text-center mb-4">Kontakt i Lokalizacja</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Zapisz się do naszego newslettera</h4>
-                        <p>
-                            Chcesz być na bieżąco z ofertą tygodnia? Zostaw
-                            maila, damy znać!
-                        </p>
-                        <form>
-                            <div class="mb-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Twój email"
-                                    aria-label="Email"
-                                    required
-                                />
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                Zapisz się
-                            </button>
-                        </form>
-                    </div>
+        <!-- Kontakt i lokalizacja-->
+        <?php include 'layout/location.php'; ?>
 
-                    <div class="col-md-6">
-                        <h4>Tu nas znajdziesz</h4>
-                        <div class="ratio ratio-4x3">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2562.2660841760643!2d22.002739115718227!3d50.04131807942356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473ce134f13827d7%3A0x9e9f4b130a1d3d6f!2sRynek%2C%2035-064%20Rzesz%C3%B3w!5e0!3m2!1spl!2spl!4v1713432230000!5m2!1spl!2spl"
-                                style="border: 0"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                            >
-                            </iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!---->
+        <!-- Stopka-->
+        <?php include 'layout/footer.php'; ?>
 
-        <!--Stopka-->
-        <footer class="bg-dark text-white text-center py-3 w-100">
-            <div class="container-fluid">
-                <p class="mb-0">&copy; 2025 Podkarpackie Przysmaki</p>
-            </div>
-        </footer>
-        <!---->
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // Funkcja do przełączania widoczności szczegółów dania
-            function toggleDetails(detailsId) {
-                const detailsElement = document.getElementById(detailsId);
-                if (detailsElement) {
-                    detailsElement.classList.toggle("active");
-                }
-            }
-
-            // Aktywacja zakładek w nawigacji menu
-            document.addEventListener("DOMContentLoaded", function () {
-                const menuTabs = document.querySelectorAll(
-                    "#menuTabs .nav-link"
-                );
-
-                menuTabs.forEach((tab) => {
-                    tab.addEventListener("click", function (e) {
-                        e.preventDefault();
-
-                        // Usunięcie klasy active z wszystkich zakładek
-                        menuTabs.forEach((t) => t.classList.remove("active"));
-
-                        // Dodanie klasy active do klikniętej zakładki
-                        this.classList.add("active");
-
-                        // Przewinięcie do odpowiedniej sekcji
-                        const targetId = this.getAttribute("href");
-                        const targetSection = document.querySelector(targetId);
-                        if (targetSection) {
-                            window.scrollTo({
-                                top: targetSection.offsetTop - 100,
-                                behavior: "smooth",
-                            });
-                        }
-                    });
-                });
-
-                // Filtry menu
-                const filterButtons = document.querySelectorAll(".filter-btn");
-                const menuItems = document.querySelectorAll(".menu-item");
-
-                filterButtons.forEach((button) => {
-                    button.addEventListener("click", function () {
-                        const filter = this.getAttribute("data-filter");
-
-                        // Usunięcie klasy active z wszystkich przycisków
-                        filterButtons.forEach((btn) =>
-                            btn.classList.remove("btn-secondary")
-                        );
-                        filterButtons.forEach((btn) =>
-                            btn.classList.add("btn-outline-secondary")
-                        );
-
-                        // Dodanie klasy active do klikniętego przycisku
-                        this.classList.remove("btn-outline-secondary");
-                        this.classList.add("btn-secondary");
-
-                        // Filtrowanie pozycji menu
-                        menuItems.forEach((item) => {
-                            if (filter === "all") {
-                                item.style.display = "flex";
-                            } else {
-                                const categories =
-                                    item.getAttribute("data-categories");
-                                if (categories && categories.includes(filter)) {
-                                    item.style.display = "flex";
-                                } else {
-                                    item.style.display = "none";
-                                }
-                            }
-                        });
-                    });
-                });
-            });
-        </script>
+        <script src="js/menu.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     </body>
 </html>

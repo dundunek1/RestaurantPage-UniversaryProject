@@ -3,184 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Rezerwacja stolika - Podkarpackie Przysmaki</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        />
-
-        <style>
-            .restaurant-map {
-                position: relative;
-                width: 100%;
-                max-width: 800px;
-                height: 600px;
-                margin: 0 auto;
-                background-color: #f8f9fa;
-                border: 2px solid #ddd;
-                border-radius: 10px;
-                overflow: hidden;
-            }
-
-            .map-content {
-                position: relative;
-                width: 800px;
-                height: 600px;
-                min-width: 800px;
-            }
-
-            .table {
-                position: absolute;
-                width: 80px;
-                height: 80px;
-                background-color: #dee2e6;
-                border: 2px solid #adb5bd;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s;
-                text-align: center;
-                font-size: 14px;
-            }
-
-            .table:hover {
-                background-color: #e9ecef;
-                transform: scale(1.05);
-                z-index: 10;
-            }
-
-            .table.selected {
-                background-color: #198754;
-                color: white;
-                border-color: #146c43;
-                box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);
-                z-index: 15;
-            }
-
-            .table.unavailable {
-                background-color: #dc3545;
-                color: white;
-                border-color: #b02a37;
-                cursor: not-allowed;
-            }
-
-            .wall {
-                position: absolute;
-                background-color: #6c757d;
-            }
-
-            .entrance {
-                position: absolute;
-                background-color: #ffc107;
-                color: black;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            .bar {
-                position: absolute;
-                background-color: #343a40;
-                border-radius: 5px;
-            }
-
-            .scroll-indicator {
-                display: none;
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-                background: rgba(0, 0, 0, 0.6);
-                color: white;
-                padding: 5px 10px;
-                border-radius: 5px;
-                font-size: 12px;
-                z-index: 20;
-            }
-
-            @media (max-width: 850px) {
-                .restaurant-map {
-                    width: 100%;
-                    max-width: 100%;
-                    height: 500px;
-                    overflow: auto;
-                }
-
-                .scroll-indicator {
-                    display: block;
-                }
-            }
-
-            @media (max-width: 576px) {
-                .restaurant-map {
-                    height: 400px;
-                }
-
-                .map-content {
-                    transform-origin: top left;
-                }
-            }
-
-            @media (hover: none) {
-                .table:hover {
-                    transform: none;
-                }
-
-                .table:active {
-                    transform: scale(1.05);
-                }
-            }
-        </style>
+        <title>Restauracja Podkarpackie Przysmaki</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link href="css/styles.css" rel="stylesheet"/>
+        <link href="css/booking.css" rel="stylesheet"/>
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="home.html"
-                    >Podkarpackie Przysmaki</a
-                >
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navMenu"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navMenu">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html"
-                                >Strona główna</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="menu.html">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="booking.html"
-                                >Rezerwacje</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html#onas">O nas</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
-        <header class="bg-light text-center py-4">
+    <body>
+         <!--Nawigacja-->
+        <?php include 'layout/navbar.php'; ?>
+        
+        <!-- Powitanie-->
+        <header class="bg-light text-center py-5">
             <div class="container">
-                <h1 class="display-5">Rezerwacja stolika</h1>
-                <p class="lead">
-                    Wybierz stolik, datę i godzinę, a my przygotujemy dla Ciebie
-                    wyjątkowe miejsce.
-                </p>
+                <h1 class="display-4">Rezerwacja stolika</h1>
+                <p class="lead"> Wybierz stolik, datę i godzinę, a my przygotujemy dla Ciebie wyjątkowe miejsce.</p>
+                <a href="menu.php" class="btn btn-primary btn-lg mt-3">Zobacz nasze menu</a>
             </div>
         </header>
 
@@ -191,29 +30,21 @@
                         <div class="date-picker">
                             <h4 class="mb-3">Wybierz datę i godzinę</h4>
                             <div class="mb-3">
-                                <label for="reservation-date" class="form-label"
-                                    >Data rezerwacji</label
-                                >
-                                <input
-                                    type="date"
-                                    class="form-control"
-                                    id="reservation-date"
-                                    required
-                                    min="2025-05-11"
-                                />
+                                <label for="reservation-date" class="form-label">Data rezerwacji</label >
+                                <input type="date"
+                                        class="form-control"
+                                        id="reservation-date"
+                                        required
+                                        min="2025-05-11"/>
                             </div>
+
                             <div class="mb-3">
-                                <label for="reservation-time" class="form-label"
-                                    >Godzina rezerwacji</label
-                                >
-                                <select
-                                    class="form-select"
-                                    id="reservation-time"
-                                    required
-                                >
-                                    <option value="" selected disabled>
-                                        Wybierz godzinę
-                                    </option>
+                                <label for="reservation-time" class="form-label">Godzina rezerwacji</label>
+                                <select class="form-select"
+                                        id="reservation-time"
+                                        required>
+
+                                    <option value="" selected disabled>Wybierz godzinę</option>
                                     <option value="12:00">12:00</option>
                                     <option value="13:00">13:00</option>
                                     <option value="14:00">14:00</option>
@@ -226,73 +57,39 @@
                                     <option value="21:00">21:00</option>
                                 </select>
                             </div>
-                            <button
-                                id="check-availability"
-                                class="btn btn-primary"
-                            >
-                                Sprawdź dostępność
+
+                            <button id="check-availability" class="btn btn-primary">
+                                    Sprawdź dostępność
                             </button>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="legend p-3 bg-light rounded border">
+                        <div class="p-3 bg-light rounded border">
                             <h4 class="mb-3">Legenda</h4>
+
                             <div class="d-flex align-items-center mb-2">
-                                <div
-                                    style="
-                                        width: 20px;
-                                        height: 20px;
-                                        background-color: #dee2e6;
-                                        border: 1px solid #adb5bd;
-                                        border-radius: 3px;
-                                    "
-                                ></div>
+                                <div class="legend"></div>
                                 <span class="ms-2">Stolik dostępny</span>
                             </div>
+
                             <div class="d-flex align-items-center mb-2">
-                                <div
-                                    style="
-                                        width: 20px;
-                                        height: 20px;
-                                        background-color: #198754;
-                                        border: 1px solid #146c43;
-                                        border-radius: 3px;
-                                    "
-                                ></div>
+                                <div class="legend legend-selected"></div>
                                 <span class="ms-2">Stolik wybrany</span>
                             </div>
+
                             <div class="d-flex align-items-center mb-2">
-                                <div
-                                    style="
-                                        width: 20px;
-                                        height: 20px;
-                                        background-color: #dc3545;
-                                        border: 1px solid #b02a37;
-                                        border-radius: 3px;
-                                    "
-                                ></div>
+                                <div class="legend legend-unavailable"></div>
                                 <span class="ms-2">Stolik niedostępny</span>
                             </div>
+
                             <div class="d-flex align-items-center mb-2">
-                                <div
-                                    style="
-                                        width: 20px;
-                                        height: 20px;
-                                        background-color: #343a40;
-                                        border-radius: 3px;
-                                    "
-                                ></div>
+                                <div class="legend legend-bar"></div>
                                 <span class="ms-2">Bar</span>
                             </div>
+
                             <div class="d-flex align-items-center">
-                                <div
-                                    style="
-                                        width: 20px;
-                                        height: 20px;
-                                        background-color: #ffc107;
-                                        border-radius: 3px;
-                                    "
-                                ></div>
+                                <div class="legend legend-entrance"></div>
                                 <span class="ms-2">Wejście</span>
                             </div>
                         </div>
@@ -300,53 +97,23 @@
                 </div>
 
                 <h4 class="text-center mb-4">Wybierz stolik na planie sali</h4>
+                
                 <div class="restaurant-map mb-4" id="restaurant-map">
                     <!-- Ściany -->
-                    <div
-                        class="wall"
-                        style="top: 0; left: 0; width: 100%; height: 10px"
-                    ></div>
-                    <div
-                        class="wall"
-                        style="bottom: 0; left: 0; width: 100%; height: 10px"
-                    ></div>
-                    <div
-                        class="wall"
-                        style="top: 0; left: 0; width: 10px; height: 100%"
-                    ></div>
-                    <div
-                        class="wall"
-                        style="top: 0; right: 0; width: 10px; height: 100%"
-                    ></div>
+                    <div class="wall wall-top"></div>
+                    <div class="wall wall-right "></div>
+                    <div class="wall wall-bottom"></div>
+                    <div class="wall wall-left"></div>
 
                     <!-- Wejście -->
-                    <div
-                        class="entrance"
-                        style="
-                            bottom: 0;
-                            left: 350px;
-                            width: 100px;
-                            height: 20px;
-                            line-height: 20px;
-                        "
-                    >
-                        WEJŚCIE
-                    </div>
+                    <div class="entrance"></div>
 
                     <!-- Bar -->
-                    <div
-                        class="bar"
-                        style="
-                            top: 20px;
-                            right: 20px;
-                            width: 200px;
-                            height: 80px;
-                        "
-                    ></div>
+                    <div class="bar"></div>
 
                     <!-- Stoliki -->
                     <div
-                        class="table"
+                        class="table "
                         data-table-id="1"
                         style="top: 140px; left: 60px"
                     >
@@ -619,13 +386,13 @@
             </div>
         </section>
 
-        <footer class="bg-dark text-white text-center py-3">
-            <div class="container">
-                <p class="mb-0">&copy; 2025 Podkarpackie Przysmaki</p>
-            </div>
-        </footer>
+        <!-- Kontakt i lokalizacja-->
+        <?php include 'layout/location.php'; ?>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Stopka-->
+        <?php include 'layout/footer.php'; ?>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="js/booking.js"></script>
     </body>
